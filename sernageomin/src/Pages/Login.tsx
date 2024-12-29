@@ -1,16 +1,26 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../context/authContext';
+import { loginUser } from '../api/auth';
+import { useNavigate } from 'react-router-dom'; // Hook para redirigir
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState('');
+  const { authToken, login } = useAuth(); // Usar el contexto
+  const navigate = useNavigate(); // Hook para navegar
 
-  const handleLogin = async (e:any) => {
+  // Verificar si el usuario ya está logueado
+  useEffect(() => {
+    if (authToken) {
+      navigate('/'); // Redirige al usuario a la página de inicio si ya está autenticado
+    }
+  }, [authToken, navigate]);
+
+  const handleLogin = async (e: any) => {
     e.preventDefault();
 
-    // Reset alert
     setAlertMessage('');
     setAlertType('');
 
@@ -21,31 +31,21 @@ function Login() {
     }
 
     try {
-      // Enviar la solicitud a la API REST
-      const response = await axios.post('http://localhost:3000/api/users/login', {
-        email,
-        password,
-      });
-
-      // Guardar el token en localStorage
-      localStorage.setItem('token', response.data.token);
-
-      // Mostrar mensaje de éxito
+      const data = await loginUser(email, password);
+      login(data.token); // Guardar el token en el contexto
       setAlertMessage('Inicio de sesión exitoso.');
       setAlertType('success');
-
-      // Opcional: redirigir al usuario a otra página
-      window.location.href = '/';
+      navigate('/'); // Redirigir al usuario tras el login
     } catch (error) {
       console.error(error);
-      // Manejo de errores de la API
-      
+      setAlertMessage('Credenciales inválidas o error del servidor.');
+      setAlertType('danger');
     }
   };
 
   return (
     <div className="container mt-5">
-      <h1 className='p-3'>Iniciar Sesión</h1>
+      <h1 className="p-3">Iniciar Sesión</h1>
       {alertMessage && (
         <div className={`alert alert-${alertType} mt-3`} role="alert">
           {alertMessage}
@@ -53,7 +53,9 @@ function Login() {
       )}
       <form onSubmit={handleLogin} className="mt-4 pb-3">
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">Correo Electrónico</label>
+          <label htmlFor="email" className="form-label">
+            Correo Electrónico
+          </label>
           <input
             type="email"
             className="form-control"
@@ -64,7 +66,9 @@ function Login() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">Contraseña</label>
+          <label htmlFor="password" className="form-label">
+            Contraseña
+          </label>
           <input
             type="password"
             className="form-control"
@@ -74,7 +78,9 @@ function Login() {
             placeholder="Ingrese su contraseña"
           />
         </div>
-        <button type="submit" className="btn btn-primary w-100">Iniciar Sesión</button>
+        <button type="submit" className="btn btn-primary w-100">
+          Iniciar Sesión
+        </button>
       </form>
     </div>
   );

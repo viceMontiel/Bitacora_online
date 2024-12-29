@@ -16,13 +16,22 @@ export const getUsers = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
-  
+  try {
+      console.log(req.email)
+        const user = await UserModel.findOneByEmail(req.email)
+        console.log('Headers:', req.headers); // Revisar los encabezados
+      if (!user) {
+          return res.status(409).json({ ok: false, msg: "No exists" })
+      }
+      return res.status(201).json({ ok: true, msg: user })
+
+  } catch (error){}
 };
 
 
 export const createUser = async (req, res) => {
     try {
-        console.log('Headers:', req.headers); // Revisa los encabezados
+        console.log('Headers:', req.headers); // Revisar los encabezados
 
         console.log('Request body:', req.body); // Log para depurar
 
@@ -79,7 +88,7 @@ export const login = async (req, res) => {
       }
   
       // Comparar contraseña
-      const isMatch = await bcryptjs.compare(password, user.contrasena); // Cambié 'user.password' a 'user.contrasena'
+      const isMatch = await bcryptjs.compare(password, user.contrasena); 
       if (!isMatch) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
@@ -100,15 +109,22 @@ export const login = async (req, res) => {
     }
   };
 
+
 export const profile = async (req, res) => {
   try {
+    console.log(req.email)
       const user = await UserModel.findOneByEmail(req.email)
-      return res.json({ ok: true, msg: user })
+      console.log('Headers:', req.headers); // Revisar los encabezados
+    if (!user) {
+        return res.status(409).json({ ok: false, msg: "No exists" })
+    }
+    return res.status(201).json({ ok: true, msg: user })
+
   } catch (error) {
-      console.log(error)
+      console.error("Error al obtener el perfil:", error);
       return res.status(500).json({
           ok: false,
           msg: 'Error server'
-      })
+      });
   }
 };

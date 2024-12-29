@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import './App.css'
 import { NavBar, Footer } from './Components'
+
 interface Props {
   children: ReactNode
 }

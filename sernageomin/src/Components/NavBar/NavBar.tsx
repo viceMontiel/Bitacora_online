@@ -1,24 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useAuth } from '../../context/authContext';
 import './NavBar.css';
 
 export const NavBar = () => {
-  // Estado para verificar si el usuario está autenticado
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // Verificar si el token está en localStorage cuando el componente se monta
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, []); // Se ejecuta solo una vez al montar el componente
+  const { authToken, logout } = useAuth(); // Accede al estado de autenticación y a la función logout
 
   const handleLogout = () => {
-    // Eliminar el token de localStorage al hacer logout
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
+    logout(); // Llama a la función logout del contexto
   };
 
   return (
@@ -33,30 +20,35 @@ export const NavBar = () => {
             className="navbar-toggler collapsed"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarDarkExampleCollapse"
-            aria-controls="navbarCollapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="navbar-collapse collapse" id="navbarDarkExampleCollapse">
+          <div className="navbar-collapse collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
-              {isAuthenticated && (
+              {authToken ? (
                 <>
                   <li className="nav-item priv">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="/crear-evento">
                       Crear Evento
                     </a>
                   </li>
                   <li className="nav-item priv">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="/mis-ultimos-eventos">
                       Mis últimos Eventos
                     </a>
                   </li>
                   <li className="nav-item priv">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="/buscar-evento">
                       Buscar Evento
+                    </a>
+                  </li>
+                  <li className="nav-item priv">
+                    <a className="nav-link" href="/perfil">
+                      perfil
                     </a>
                   </li>
                   <li className="nav-item">
@@ -65,8 +57,7 @@ export const NavBar = () => {
                     </button>
                   </li>
                 </>
-              )}
-              {!isAuthenticated && (
+              ) : (
                 <li className="nav-item" id="nopriv">
                   <a className="btn btn-block btn-primary" href="/login">
                     Iniciar sesión

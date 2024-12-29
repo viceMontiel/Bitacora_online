@@ -10,7 +10,6 @@ export const CardEvent = () => {
                 <Carousel interval={4000} slide={false}>
                     <Carousel.Item >
                         <img 
-                        
                             className="h-100"
                             src={Min} 
                             alt="Imagen 1" 

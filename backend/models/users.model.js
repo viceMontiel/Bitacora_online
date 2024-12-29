@@ -17,21 +17,19 @@ const create = async ({ email, password, name, last_name }) => {
 };
 
 const findOneByEmail = async (email) => {
-  const query = `
-    SELECT * FROM usuario
-    WHERE correo = ?
-  `;
+  const query = `SELECT * FROM usuario WHERE correo = ?`;
 
   try {
     const [rows] = await pool.query(query, [email]);
-    return rows[0];
+    return rows[0]; // Asegúrate de que rows[0] no sea undefined
   } catch (error) {
     console.error("Error finding user by email:", error);
     throw error;
   }
 };
 
+
 export const UserModel = {
   create,
-  findOneByEmail,
+  findOneByEmail
 };
