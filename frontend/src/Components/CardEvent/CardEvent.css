@@ -1,0 +1,16 @@
+#imagen.with-images {
+    height: 200px;
+  }
+  
+  #imagen.no-images {
+    height: 0px;
+  }
+.program{
+    font-weight:800;
+    font-size: small;
+}
+
+.fecha{
+    font-weight:200;
+    font-size: smaller;
+}
