@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../config.js';
+import { securityConfig } from '../config.js';
 
 export const verifyToken = (req, res, next) => {
     // Obtener el token del encabezado 'Authorization'
@@ -19,7 +19,7 @@ export const verifyToken = (req, res, next) => {
 
     try {
         // Verificar el token usando jwt.verify
-        const { email } = jwt.verify(token, JWT_SECRET);
+        const { email } = jwt.verify(token, securityConfig.jwtSecret);
         
         // Si es válido, agregar el email al objeto req
         req.email = email;

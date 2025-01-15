@@ -10,13 +10,15 @@
    - ENRUTAMIENTO PROTEGIDO
    - Crear eventos
    - Ver mis últimos eventos registrados
+   - Buscar evento (por fecha y por analista) - ALTA
+   - Ver turnos
+   - Ver eventos x turnos - ALTA
 2. FUNCIONES EN PROGRESO
 3. FUNCIONES PENDIENTES
-   - Buscar evento (por fecha y por analista) - ALTA
-   - Ver turnos || Ver eventos x turnos - ALTA
    - Descargar lista de eventos - MEDIA
    - Uso de roles - BAJA
    - Editar eventos registrados - BAJA
+   - Documentar Código
 
 ## METAS SEMANALES
 

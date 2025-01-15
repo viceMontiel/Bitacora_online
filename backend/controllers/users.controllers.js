@@ -1,7 +1,7 @@
 import bcryptjs from 'bcryptjs'
 import jwt from "jsonwebtoken"
 import { UserModel } from '../models/users.model.js'
-import { JWT_SECRET } from "../config.js";
+import { securityConfig } from "../config.js";
 import { pool } from '../database/connection.database.js';
 
 export const getUsers = async (req, res) => {
@@ -57,9 +57,9 @@ export const createUser = async (req, res) => {
 
       //creating a token to the session
       const token = jwt.sign({ email: newUser.email },
-          JWT_SECRET,
+        securityConfig.jwtSecret,
           {
-              expiresIn: "10h"
+              expiresIn: securityConfig.tokenExpiration
           }
       )
       return res.status(201).json({ ok: true, msg: token })

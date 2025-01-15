@@ -1,0 +1,22 @@
+.imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Espaciado entre imágenes */
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .imagenes img {
+    max-width: 100%; /* Adaptabilidad a contenedores pequeños */
+    max-height: 500px; /* Controla la altura máxima */
+    object-fit: contain; /* Asegura un recorte proporcionado */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar las imágenes */
+    transition: transform 0.3s ease;
+  }
+  
+  .imagenes img:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+    cursor: pointer;
+  }
+  

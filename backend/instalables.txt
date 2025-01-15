@@ -1,8 +1,0 @@
-node, npm
-
-1. npm init -y
-2. configurar package json
-3. express, dotenv
-4. nodemon -D
-5. mysql2
-6. jwt

@@ -14,7 +14,7 @@ create table Usuario(
 CREATE TABLE Evento (
     id INT NOT NULL UNIQUE AUTO_INCREMENT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    programa VARCHAR(50) DEFAULT NULL,
+    fuente_informacion VARCHAR(50) DEFAULT NULL,
     descripcion TEXT DEFAULT NULL,
     id_Usuario INT NOT NULL,
     PRIMARY KEY (id),
